@@ -11,7 +11,6 @@ class ViewTasksScreen extends StatefulWidget {
 class _ViewTasksScreenState extends State<ViewTasksScreen> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // --- AI LOGIC: VALIDATION + DEADLINE SUGGESTION ---
   Future<void> _runAIAssignment(DocumentSnapshot taskDoc) async {
     showDialog(
       context: context,
@@ -32,7 +31,7 @@ class _ViewTasksScreenState extends State<ViewTasksScreen> {
       String taskSkills = (taskData['skills'] ?? "").toString().toLowerCase();
 
       DocumentSnapshot? bestMatch;
-      double highestScore = 0; // Starts at 0 to ensure only relevant matches are picked
+      double highestScore = 0;
 
       for (var emp in employeeSnap.docs) {
         Map<String, dynamic> empData = emp.data() as Map<String, dynamic>;
@@ -50,22 +49,19 @@ class _ViewTasksScreenState extends State<ViewTasksScreen> {
           }
         }
 
-        // Workload Penalty
         currentScore -= (workload / 10);
 
-        // System Check: Must have at least one matching skill
         if (matchCount > 0 && currentScore > highestScore) {
           highestScore = currentScore;
           bestMatch = emp;
         }
       }
 
-      Navigator.pop(context); // Close loading
+      Navigator.pop(context);
 
       if (bestMatch != null) {
         _showAssignmentPopup(taskDoc, bestMatch);
       } else {
-        // Show the alert if no qualified employee is found
         _showNoMatchAlert(taskSkills);
       }
     } catch (e) {
@@ -74,7 +70,7 @@ class _ViewTasksScreenState extends State<ViewTasksScreen> {
     }
   }
 
-  // --- POPUP: NO QUALIFIED EMPLOYEE ---
+
   void _showNoMatchAlert(String missingSkills) {
     showDialog(
       context: context,
@@ -105,7 +101,7 @@ class _ViewTasksScreenState extends State<ViewTasksScreen> {
     );
   }
 
-  // --- POPUP: ASSIGNMENT + DEADLINE SUGGESTION ---
+
   void _showAssignmentPopup(DocumentSnapshot task, DocumentSnapshot emp) {
     Map<String, dynamic> empData = emp.data() as Map<String, dynamic>;
     Map<String, dynamic> taskData = task.data() as Map<String, dynamic>;

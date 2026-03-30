@@ -19,7 +19,6 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
 
   bool _isSaving = false;
 
-  // Function to save to Firebase
   Future<void> _saveEmployee() async {
     if (_employeeData['email'].isEmpty || _employeeData['password'].isEmpty) {
       _showSnackBar("Email & Password required", Colors.redAccent);
@@ -28,13 +27,13 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
 
     setState(() => _isSaving = true);
     try {
-      // 1. Create User in Firebase Auth
+
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _employeeData['email'],
         password: _employeeData['password'],
       );
 
-      // 2. Save detailed info in Firestore
+
       await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,
         ..._employeeData,
@@ -140,9 +139,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     );
   }
 
-  // --- UPDATED STYLED DIALOG ---
+
   void _showStyledInputDialog(String title, String currentVal, Function(String) onSave) {
-    // If it's a password, we want the dialog to start fresh, otherwise show current value
     TextEditingController controller = TextEditingController(
         text: (title == "Password" || currentVal == "Tap to enter...") ? "" : currentVal
     );
@@ -160,7 +158,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
           controller: controller,
           autofocus: true,
           style: const TextStyle(color: Colors.white),
-          obscureText: title == "Password", // Hide text if it's the password field
+          obscureText: title == "Password",
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white.withOpacity(0.05),

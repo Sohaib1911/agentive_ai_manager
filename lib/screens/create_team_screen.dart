@@ -22,7 +22,6 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
 
   bool _isSaving = false;
 
-  // Save Team to Firestore
   Future<void> _saveTeam() async {
     if (_teamData['teamName'].isEmpty || _teamData['leaderId'].isEmpty) {
       _showSnackBar("Team Name and Leader are required!", Colors.redAccent);
@@ -34,7 +33,7 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
       await _db.collection('teams').add({
         ..._teamData,
         'createdAt': FieldValue.serverTimestamp(),
-        'memberCount': 1, // Leader is the first member
+        'memberCount': 1,
       });
 
       if (!mounted) return;
@@ -82,7 +81,6 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
               _sectionLabel("ORGANIZATION"),
               _inputTile("Department", _teamData['department'], (v) => setState(() => _teamData['department'] = v)),
 
-              // --- TEAM LEADER DROPDOWN ---
               _leaderDropdownTile(),
 
               const SizedBox(height: 25),
@@ -133,7 +131,7 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
     );
   }
 
-  // --- SPECIAL TILE FOR DROPDOWN ---
+
   Widget _leaderDropdownTile() {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),

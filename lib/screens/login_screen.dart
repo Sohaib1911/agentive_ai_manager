@@ -32,8 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (doc.exists && mounted) {
         String role = doc['role'];
-        // Note: With the AuthWrapper in main.dart, this manual navigation
-        // is technically a backup, but it's good to keep for a snappy feel.
         Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) => role == 'manager' ? const ManagerDashboard() : const EmployeeDashboard()));
       }
@@ -71,11 +69,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // --- NEW ROBOTIC ICON ---
+
                     const Icon(Icons.adb_outlined, size: 80, color: Colors.blueAccent),
                     const SizedBox(height: 25),
 
-                    // --- PROJECT BRANDING ---
                     const Text(
                       "AGENTIVE AI",
                       textAlign: TextAlign.center,
@@ -98,17 +95,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 50),
 
-                    // --- NEUTRAL INPUT FIELDS ---
                     _buildInputField(
                       controller: _email,
-                      hint: "Email Address", // Changed from Manager Email
+                      hint: "Email Address",
                       icon: Icons.alternate_email_rounded,
                     ),
                     const SizedBox(height: 20),
 
                     _buildInputField(
                       controller: _pass,
-                      hint: "Password", // Changed from Secret Password
+                      hint: "Password",
                       icon: Icons.lock_person_outlined,
                       isPassword: true,
                     ),
@@ -137,9 +133,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      "Powered by Sohaib Mohsin",
-                      style: TextStyle(color: Colors.white12, fontSize: 10),
-                    )
+                      "Powered by Sohaib Mohsin & Hammad Hussain",
+                      style: TextStyle(color: Colors.white54, fontSize: 10),
+                    ),
                   ],
                 ),
               ),

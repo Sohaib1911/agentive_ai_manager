@@ -9,22 +9,19 @@ class CreateTaskScreen extends StatefulWidget {
 }
 
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
-  // Data Map to store inputs - Ensure "skills" is handled for the AI match
   final Map<String, dynamic> _taskData = {
     'title': '',
     'description': '',
     'category': 'Development',
     'priority': 'Medium',
-    'skills': '', // This is the Required Skills field
+    'skills': '',
     'status': 'pending',
     'aiSuggestedEmployee': 'Analyzing...',
   };
 
   bool _isSaving = false;
 
-  // Save Task to Firestore
   Future<void> _saveTask() async {
-    // Validation: Title and Skills are critical for the AI Agent
     if (_taskData['title'].isEmpty || _taskData['skills'].isEmpty) {
       _showSnackBar("Title and Required Skills are mandatory!", Colors.redAccent);
       return;

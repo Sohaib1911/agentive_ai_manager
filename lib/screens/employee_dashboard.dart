@@ -46,7 +46,6 @@ class EmployeeDashboardPage extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     return Container(
-      // 1. Ensure the container takes up the full screen height
       width: double.infinity,
       height: double.infinity,
       decoration: const BoxDecoration(
@@ -56,7 +55,6 @@ class EmployeeDashboardPage extends StatelessWidget {
           colors: [Color(0xFF000000), Color(0xFF001F3F)],
         ),
       ),
-      // 2. Use SafeArea and SingleChildScrollView inside
       child: SafeArea(
         child: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance.collection('users').doc(user?.uid).snapshots(),
@@ -65,13 +63,11 @@ class EmployeeDashboardPage extends StatelessWidget {
             var userData = userSnapshot.data!.data() as Map<String, dynamic>? ?? {};
 
             return SingleChildScrollView(
-              // Add 'physics' to ensure smooth scrolling over the gradient
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // ... Your Welcome Section ...
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -99,10 +95,9 @@ class EmployeeDashboardPage extends StatelessWidget {
                   const Text("ACTIVE MISSIONS", style: TextStyle(color: Colors.white70, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1)),
                   const SizedBox(height: 15),
 
-                  // This is where your tasks are listed
+
                   _employeeTaskList(user?.uid ?? ""),
 
-                  // Add a little extra padding at the bottom so the last task doesn't touch the Nav Bar
                   const SizedBox(height: 50),
                 ],
               ),
@@ -272,7 +267,7 @@ class EmployeeDashboardPage extends StatelessWidget {
   }
 }
 
-// --- UPDATED PROFILE PAGE ---
+
 class EmployeeProfilePage extends StatelessWidget {
   const EmployeeProfilePage({super.key});
 
@@ -286,7 +281,7 @@ class EmployeeProfilePage extends StatelessWidget {
         gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFF000000), Color(0xFF001F3F)]), // Manager Theme Background
+            colors: [Color(0xFF000000), Color(0xFF001F3F)]),
       ),
       child: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance.collection('users').doc(user?.uid).snapshots(),

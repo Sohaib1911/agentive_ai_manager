@@ -69,7 +69,7 @@ class _ViewTeamsScreenState extends State<ViewTeamsScreen> {
                             // FETCHING MEMBERS OF THIS TEAM
                             StreamBuilder<QuerySnapshot>(
                               stream: _db.collection('users')
-                                  .where('teamId', isEqualTo: team.id) // Assuming you link users via teamId
+                                  .where('teamId', isEqualTo: team.id)
                                   .snapshots(),
                               builder: (context, memberSnap) {
                                 if (!memberSnap.hasData) return const LinearProgressIndicator();

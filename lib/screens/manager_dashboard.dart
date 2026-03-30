@@ -21,7 +21,7 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
 
   final List<Widget> _pages = [
     const DashboardPage(),
-    const ProfilePage(), // This class is defined below
+    const ProfilePage(),
   ];
 
   @override
@@ -277,7 +277,6 @@ class DashboardPage extends StatelessWidget {
   }
 }
 
-// --- MISSING CLASSES ADDED BELOW ---
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -302,8 +301,6 @@ class ProfilePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
             onPressed: () async {
-              // This is all you need now!
-              // The AuthWrapper in main.dart will handle the screen switch automatically.
               await FirebaseAuth.instance.signOut();
             },
             child: const Text("LOGOUT SESSION",
